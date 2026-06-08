@@ -23,7 +23,7 @@ app.get('/', (req, res) => {
 // Webhook events (POST)
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
-  console.log(\n\nWebhook received ${timestamp}\n);
+  console.log(`\n\nWebhook received ${timestamp}\n`);
   console.log(JSON.stringify(req.body, null, 2));
   res.status(200).end();
 });
@@ -34,5 +34,5 @@ app.get('/health', (req, res) => {
 });
 
 app.listen(port, '0.0.0.0', () => {
-  console.log(\nListening on port ${port}\n);
+  console.log(`\nListening on port ${port}\n`);
 });
