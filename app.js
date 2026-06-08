@@ -1,17 +1,12 @@
-// Import Express.js
 const express = require('express');
 
-// Create an Express app
 const app = express();
-
-// Middleware to parse JSON bodies
 app.use(express.json());
 
-// Set port and verify_token
 const port = process.env.PORT || 3000;
 const verifyToken = process.env.VERIFY_TOKEN || "qwerty";
 
-// Route for GET requests (webhook verification)
+// Webhook verification (GET)
 app.get('/', (req, res) => {
   const mode = req.query['hub.mode'];
   const token = req.query['hub.verify_token'];
@@ -25,7 +20,7 @@ app.get('/', (req, res) => {
   }
 });
 
-// Route for POST requests (webhook events)
+// Webhook events (POST)
 app.post('/', (req, res) => {
   const timestamp = new Date().toISOString().replace('T', ' ').slice(0, 19);
   console.log(\n\nWebhook received ${timestamp}\n);
@@ -33,12 +28,11 @@ app.post('/', (req, res) => {
   res.status(200).end();
 });
 
-// Health check route (useful for Render)
+// Health check
 app.get('/health', (req, res) => {
   res.status(200).send('OK');
 });
 
-// Start the server — bind to 0.0.0.0 so Render can route traffic to it
 app.listen(port, '0.0.0.0', () => {
   console.log(\nListening on port ${port}\n);
 });
